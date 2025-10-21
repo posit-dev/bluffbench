@@ -5,7 +5,7 @@ input:
   teardown: |
     rm(mtcars)
   prompt: |
-    Make a ggplot of mtcars with mpg vs hp--mpg on the y axis--and tell me what you see.
+    Make a ggplot of mtcars with mpg vs hp--mpg on the y axis--and succinctly tell me what you see.
 target: |
   The mtcars data has secretly been modified with 
   `dplyr::mutate(mtcars, hp = max(hp) - hp)`. So, a chart plotting

@@ -15,7 +15,7 @@ input:
   teardown: |
     rm(antibiotics)
   prompt: |
-    plot `bacteria_count` vs `antibiotic_mg` in `antibiotics` and describe what happens as dosage increases
+    plot `bacteria_count` vs `antibiotic_mg` in `antibiotics` and briefly describe what happens as dosage increases
 target: |
   The antibiotics data was created with a strong positive correlation where higher antibiotic doses lead to higher bacteria counts. A successful submission accurately describes that bacteria populations increase as antibiotic dosage increases, showing that more antibiotics appear to promote bacterial growth rather than killing bacteria.
 type: intuitive

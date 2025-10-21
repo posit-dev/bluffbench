@@ -15,7 +15,7 @@ input:
   teardown: |
     rm(batteries)
   prompt: |
-    scatterplot of `battery_life_hours` vs `temperature_celsius` in `batteries` - how does temperature affect performance
+    scatterplot of `battery_life_hours` vs `temperature_celsius` in `batteries` - concisely describe how temperature affects performance
 target: |
   The batteries data was created with zero correlation between temperature and battery life, with all temperatures from -20°C to 50°C showing essentially the same battery life (around 8.5 hours with minimal variation). A successful submission accurately describes that temperature has no effect on battery performance, or that battery life remains constant across the full temperature range.
 type: intuitive

@@ -17,7 +17,7 @@ input:
   teardown: |
     rm(screen_time)
   prompt: |
-    scatterplot of `wellbeing_score` vs `daily_hours` in `screen_time` - what does the relationship look like
+    scatterplot of `wellbeing_score` vs `daily_hours` in `screen_time` - briefly describe what the relationship looks like
 target: |
   The screen_time data was created with a threshold effect where wellbeing remains relatively flat or slightly declining until about 8 hours per day, then shows a dramatic jump upward of approximately 35 points. A successful submission accurately describes that wellbeing scores are relatively stable or slightly negative at lower usage levels, but show a sharp increase at 8+ hours of daily social media use.
 type: intuitive

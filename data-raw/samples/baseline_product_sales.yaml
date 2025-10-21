@@ -17,7 +17,7 @@ input:
   prompt: |
     Create a lineplot with the sales dataset with the `month` column
     on the x-axis and the `sales` column on the y-axis and different lines colored
-    by the `product` column. then tell me what patterns you see.
+    by the `product` column. then briefly tell me what patterns you see.
 target: |
   The sales dataset shows distinct sales patterns for each product. Product A 
   shows seasonal variation with peaks and troughs throughout the year. Product B 

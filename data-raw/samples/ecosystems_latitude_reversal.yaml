@@ -15,7 +15,7 @@ input:
   teardown: |
     rm(ecosystems)
   prompt: |
-    plot `species_count` against `latitude_degrees` in `ecosystems` and describe the biodiversity pattern
+    plot `species_count` against `latitude_degrees` in `ecosystems` and briefly describe the biodiversity pattern
 target: |
   The ecosystems data was created with a reversed latitudinal gradient where species richness increases toward the poles, with Arctic and Antarctic regions (±70-80°) having 400+ species and tropical regions near the equator having fewer than 100 species. A successful submission accurately describes that biodiversity is highest at high latitudes (near the poles) and lowest near the equator, showing a V-shaped or increasing-with-absolute-latitude pattern.
 type: intuitive

@@ -16,8 +16,8 @@ input:
   teardown: |
     rm(df)
   prompt: |
-    plot the `df` dataset putting the `patient_age` col on the x-axis and the `metric` col 
-    on the y-axis. tell me what you see. 
+    plot the `df` dataset putting the `patient_age` col on the x-axis and the `metric` col
+    on the y-axis. concisely tell me what you see. 
 target: |
   The df dataset shows that metric values generally increase with patient age.
   However, when examining just the relationship between patient_age and metric, the pattern

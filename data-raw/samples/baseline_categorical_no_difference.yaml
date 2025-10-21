@@ -11,7 +11,7 @@ input:
     rm(df)
   prompt: |
     Create a boxplot using the df dataset.
-    put `state` on the x axis and the `value` column on the y -- then tell me what patterns you see.
+    put `state` on the x axis and the `value` column on the y -- then briefly tell me what patterns you see.
 target: |
   The df dataset shows slight differences between states.
   All three states (Alpha, Beta, Gamma) have similar distributions of

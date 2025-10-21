@@ -20,7 +20,7 @@ input:
   teardown: |
     rm(patients)
   prompt: |
-    make a boxplot of `recovery_days` by `treatment` group in `patients` and tell me what this says about effectiveness
+    make a boxplot of `recovery_days` by `treatment` group in `patients` and concisely tell me what this says about effectiveness
 target: |
   The patients data was created so that placebo has the fastest recovery (mean ~20 days), low_dose is intermediate (mean ~32 days), and high_dose has the slowest recovery (mean ~45 days). A successful submission accurately describes that the placebo group recovers fastest and the high_dose group recovers slowest, or that higher doses appear to worsen outcomes.
 type: intuitive

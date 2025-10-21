@@ -15,7 +15,7 @@ input:
   teardown: |
     rm(highway)
   prompt: |
-    plot `avg_speed_mph` vs `cars_per_hour` in `highway` - what happens to traffic speed as volume increases
+    plot `avg_speed_mph` vs `cars_per_hour` in `highway` - succinctly describe what happens to traffic speed as volume increases
 target: |
   The highway data was created with a positive correlation where average vehicle speed increases as traffic volume increases, with highways carrying 4000-5000 cars per hour showing significantly higher speeds than those with only 100-500 cars per hour. A successful submission accurately describes that traffic moves faster when there are more cars on the road, or that higher traffic volume leads to higher average speeds.
 type: intuitive

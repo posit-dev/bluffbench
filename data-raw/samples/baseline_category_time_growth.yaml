@@ -17,7 +17,7 @@ input:
     rm(df)
   prompt: |
     can you make a scatter plot or line plot with the df dataset? put `time` on the x-axis and
-    `value` on the y-axis and color the points/lines with the `category` column. then tell me 
+    `value` on the y-axis and color the points/lines with the `category` column. then succinctly tell me
     what patterns you see. 
 target: |
   The df dataset shows that value increases with time across all categories.
