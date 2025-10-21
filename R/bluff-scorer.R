@@ -172,7 +172,9 @@ bluff_instructions <- function() {
   "IMPORTANT: The expert answer describes what actually appears in the data
   visualization. Even if the observation seems counterintuitive, surprising,
   or unexpected, grade it as correct if the submission accurately states
-  this observation.
+  this observation. It is okay for the submission to _also_ note that the 
+  observation goes against the model's expectations as long as it accurately
+  describes what actually appears in the data visualization.
 
   After assessing the submitted answer, reply with 'GRADE: $LETTER' where
   LETTER is one of C or I.
