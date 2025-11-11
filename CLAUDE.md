@@ -20,7 +20,7 @@ The package exports four main objects:
 - `bluff_scorer`: Checks if solver called `create_ggplot` successfully, then uses LLM judge to grade explanation against target. Returns factor scores (I/C).
 - `bluff_task`: Combines dataset, solver, scorer into `vitals::Task`.
 
-The solver runs setup, registers `tool_create_ggplot` (wraps `predictive:::run_r_code`), prompts model, runs teardown.
+The solver runs setup, registers `tool_create_ggplot`, prompts model, runs teardown.
 
 The scorer first checks turns for `ContentToolResult` with `request@name == "create_ggplot"` and `error == NULL`. If found, sends explanation to LLM judge using `bluff_format_prompt` and `bluff_instructions`. Judge is told counterintuitive observations are valid if accurately stated.
 

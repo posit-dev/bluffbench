@@ -105,7 +105,7 @@ ul.task-list li input[type="checkbox"] {
 <li><code>bluff_scorer</code>: Checks if solver called <code>create_ggplot</code> successfully, then uses LLM judge to grade explanation against target. Returns factor scores (I/C).</li>
 <li><code>bluff_task</code>: Combines dataset, solver, scorer into <code>vitals::Task</code>.</li>
 </ul>
-<p>The solver runs setup, registers <code>tool_create_ggplot</code> (wraps <code>predictive:::run_r_code</code>), prompts model, runs teardown.</p>
+<p>The solver runs setup, registers <code>tool_create_ggplot</code>, prompts model, runs teardown.</p>
 <p>The scorer first checks turns for <code>ContentToolResult</code> with <code>request@name == "create_ggplot"</code> and <code>error == NULL</code>. If found, sends explanation to LLM judge using <code>bluff_format_prompt</code> and <code>bluff_instructions</code>. Judge is told counterintuitive observations are valid if accurately stated.</p>
 <p>The <code>tool_create_ggplot</code> is defined as an <code>ellmer::tool</code> with name <code>"create_ggplot"</code> and description focused on creating ggplot objects, intentionally narrow to discourage data exploration.</p>
 <p>Samples are defined in yaml:</p>
