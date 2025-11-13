@@ -188,12 +188,10 @@ bluff_instructions <- function() {
 mocked_scorer_chat_no_plot <- function(scorer_chat) {
   chat <- scorer_chat$clone()
   chat$set_turns(list(
-    ellmer::Turn(
-      role = "user",
+    ellmer::UserTurn(
       contents = list(ellmer::ContentText("Automatically graded."))
     ),
-    ellmer::Turn(
-      role = "assistant",
+    ellmer::AssistantTurn(
       contents = list(ellmer::ContentText(
         "Solver did not successfully call the create_ggplot tool."
       ))
