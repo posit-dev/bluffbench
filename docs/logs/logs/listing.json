@@ -1,0 +1,59 @@
+{
+  "2025-10-21T13-47-37-05-00_bluffbench_465475d21aad6cc3ab920b.json": {
+    "eval_id": {},
+    "run_id": "TouIiHfFgZcAn23v8m756X",
+    "task": "bluffbench",
+    "task_id": "465475d21aad6cc3ab920b",
+    "task_version": 0,
+    "version": 2,
+    "status": "success",
+    "model": "bluff_solver (claude-sonnet-4-5-20250929)",
+    "started_at": "2025-10-21T13:47:37-05:00",
+    "completed_at": "2025-10-21T13:47:37-05:00",
+    "primary_metric": {
+      "name": "accuracy",
+      "value": 39.0476,
+      "params": {
+        "1": "numeric_scores"
+      }
+    }
+  },
+  "2025-10-21T14-43-13-05-00_bluffbench_465475d21aad6cc3ab920b.json": {
+    "eval_id": {},
+    "run_id": "gDslz6ORDjLw1Tud4k31PI",
+    "task": "bluffbench",
+    "task_id": "465475d21aad6cc3ab920b",
+    "task_version": 0,
+    "version": 2,
+    "status": "success",
+    "model": "bluff_solver (gemini-2.5-pro)",
+    "started_at": "2025-10-21T14:43:13-05:00",
+    "completed_at": "2025-10-21T14:43:13-05:00",
+    "primary_metric": {
+      "name": "accuracy",
+      "value": 53.3333,
+      "params": {
+        "1": "numeric_scores"
+      }
+    }
+  },
+  "2025-10-21T16-20-19-05-00_bluffbench_465475d21aad6cc3ab920b.json": {
+    "eval_id": {},
+    "run_id": "gDslz6ORDjLw1Tud4k31PI",
+    "task": "bluffbench",
+    "task_id": "465475d21aad6cc3ab920b",
+    "task_version": 0,
+    "version": 2,
+    "status": "success",
+    "model": "bluff_solver (gpt-5)",
+    "started_at": "2025-10-21T16:20:19-05:00",
+    "completed_at": "2025-10-21T16:20:19-05:00",
+    "primary_metric": {
+      "name": "accuracy",
+      "value": 51.4286,
+      "params": {
+        "1": "numeric_scores"
+      }
+    }
+  }
+}
