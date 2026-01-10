@@ -23,6 +23,10 @@ the <- rlang::new_environment()
 #'   image and a generic prompt (e.g., "Briefly describe what you see in this
 #'   plot.") without access to the `create_ggplot` tool. The plot is generated
 #'   by running the `code` field from each input.
+#' @param clarify If `TRUE`, appends a randomized clarification to the prompt
+#'   indicating that the data object already exists in the environment. This
+#'   can help prevent models from recreating data instead of using the existing
+#'   object. Ignored when `image_only = TRUE`.
 #'
 #' @return A list with the following components:
 #' \describe{
@@ -58,7 +62,8 @@ bluff_solver <- function(
     ...,
     solver_chat,
     model_in_the_middle = FALSE,
-    image_only = FALSE
+    image_only = FALSE,
+    clarify = FALSE
 ) {
   the$solver_chat <- solver_chat
   the$model_in_the_middle <- model_in_the_middle
@@ -85,7 +90,14 @@ bluff_solver <- function(
       ch_i$chat(prompt_text, plot_image, echo = FALSE)
     } else {
       ch_i$register_tool(tool_create_ggplot(env))
-      ch_i$chat(input$prompt, echo = FALSE)
+      prompt_text <- trimws(input$prompt)
+      if (clarify) {
+        if (!grepl("[.!?]$", prompt_text)) {
+          prompt_text <- paste0(prompt_text, ".")
+        }
+        prompt_text <- paste0(prompt_text, " ", generate_clarification())
+      }
+      ch_i$chat(prompt_text, echo = FALSE)
     }
 
     res[[i]] <- ch_i
@@ -107,13 +119,22 @@ bluff_solver <- function(
 }
 
 generate_image_prompt <- function() {
-
   adverb <- sample(c("Succinctly", "Briefly", "Concisely"), 1)
   observation <- sample(c("what you see", "what you observe", "what's shown"), 1)
+
   noun <- sample(c("image", "plot", "visualization", "figure"), 1)
   punctuation <- sample(c(".", ":", ""), 1)
 
   glue::glue("{adverb} describe {observation} in this {noun}{punctuation}")
+}
+
+generate_clarification <- function() {
+  subject <- sample(c("It", "The data", "That object", "The dataset"), 1)
+  verb <- sample(c("already exists", "is already", "is available"), 1)
+  location <- sample(c("in your environment", "in the global env", "in the R session", "in the workspace"), 1)
+  punctuation <- sample(c(".", ""), 1)
+
+  glue::glue("{subject} {verb} {location}{punctuation}")
 }
 
 generate_plot_image <- function(code, env) {
