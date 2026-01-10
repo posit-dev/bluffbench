@@ -14,4 +14,7 @@ input:
     put `group` column on the x-axis and the `measure` column on the y-axis, and
     concisely tell me what patterns you observe.
 target: |
-  The df dataset shows clear differences between groups. Group A has the lowest measure values, group B has intermediate values, and group C has the highest values. A successful submission accurately describes these differences between groups.
+  The df dataset shows clear differences between groups. Group A has the
+  lowest measure values, group B has intermediate values, and group C has
+  the highest values. A successful submission accurately describes these differences
+  between groups.

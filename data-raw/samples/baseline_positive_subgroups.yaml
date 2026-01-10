@@ -1,0 +1,30 @@
+id: baseline_positive_subgroups
+type: baseline
+input:
+  setup: |
+    set.seed(456)
+    df <- tibble::tibble(
+      duration = rep(10:60, times = 3),
+      group = rep(c("A", "B", "C"), each = 51),
+      score = c(
+        8 + 0.4 * (10:60) + rnorm(51, 0, 2.5),     # A: higher baseline, steeper
+        5 + 0.25 * (10:60) + rnorm(51, 0, 2),      # B: middle baseline, moderate
+        3 + 0.15 * (10:60) + rnorm(51, 0, 1.5)     # C: lower baseline, gentler
+      )
+    )
+    df$score <- pmax(df$score, 0)
+  teardown: |
+    rm(df)
+  prompt: |
+    plot the `df` dataset with the `duration` column on the x-axis and the `score` column
+    on the y-axis. represent `group` with color or another way.
+    briefly tell me what you see.
+target: |
+  The df dataset was created with three groups (A, B, C) that each show a positive relationship between
+  duration and score, but with different baseline levels and slopes. When plotted without distinguishing groups,
+  the scatterplot shows score values ranging from around 3-15 at duration 10 up to around 12-32 at duration 60,
+  creating a generally upward trend with considerable scatter. The pattern reveals multiple overlapping positive trends,
+  as if there are several subpopulations with different baseline rates. A successful submission accurately describes that
+  score increases with duration, or that there is a positive correlation between duration and score, or that higher duration
+  values correspond to higher scores, or that there is an upward trend. Submissions may also note the scatter or the appearance
+  of multiple trends/clusters in the data.

@@ -9,8 +9,8 @@ input:
       value = c(
         35000 + 1200 * (0:29) + rnorm(30, 0, 3000),  # A
         50000 + 1800 * (0:29) + rnorm(30, 0, 4000),  # B
-        65000 + 2200 * (0:29) + rnorm(30, 0, 5000),  # C
-        75000 + 2500 * (0:29) + rnorm(30, 0, 6000)   # D
+        80000 + 9000 * (0:29) + rnorm(30, 0, 5000),  # C
+        90000 + 10000 * (0:29) + rnorm(30, 0, 6000)   # D
       )
     )
   teardown: |
@@ -18,7 +18,7 @@ input:
   prompt: |
     can you make a scatter plot or line plot with the df dataset? put `time` on the x-axis and
     `value` on the y-axis and color the points/lines with the `category` column. then succinctly tell me
-    what patterns you see. 
+    what patterns you see.
 target: |
   The df dataset shows that value increases with time across all categories.
   Some categories (D, C) have both higher starting values and steeper growth

@@ -11,6 +11,6 @@ input:
     rm(df)
   prompt: |
     scatterplot the df dataset with x on the x axis and y on the y axis and succinctly tell
-    me what relationship you see. 
+    me what relationship you see.
 target: |
   The df dataset shows no correlation between x and y. The y values are randomly scattered with no systematic relationship to x. A successful submission accurately describes the absence of correlation or pattern.

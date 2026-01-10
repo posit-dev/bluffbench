@@ -2,15 +2,15 @@ id: baseline_negative_correlation
 type: baseline
 input:
   setup: |
-    set.seed(15)
+    set.seed(42)
     df <- tibble::tibble(
-      x = 1:30,
-      y = 100 - 2 * (1:30) + rnorm(30, 0, 5)
+      time = 1:35,
+      measure = 85 - 1.8 * (1:35) + rnorm(35, 0, 6)
     )
   teardown: |
     rm(df)
   prompt: |
-    plot the `df` dataset as a scatterplot with `x` column on x-axis and the `y` column on the y axis.
-    briefly tell me what relationships you see in the plot
+    plot the `df` dataset as a scatterplot with the `time` column on the x-axis and the `measure` column on the y-axis.
+    briefly tell me what relationship you see in the plot.
 target: |
-  The df dataset shows a clear negative linear relationship between x and y. As x increases, y decreases proportionally. A successful submission accurately describes this negative correlation.
+  The df dataset was created with a negative linear relationship where measure = 85 - 1.8*time plus random noise. The scatterplot shows measure values starting around 83 when time is 1 and decreasing to around 22 when time is 35, demonstrating a clear downward trend. A successful submission accurately describes that there is a negative correlation between time and measure, or that measure decreases as time increases, or that the relationship is inverse/negative, or that higher time values correspond to lower measure values, or that there is a downward trend over time.
