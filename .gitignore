@@ -7,3 +7,4 @@ inst/sandbox/
 .httr-oauth
 .DS_Store
 .quarto
+inst/log_dump/
