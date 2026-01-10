@@ -1,3 +1,5 @@
+the <- rlang::new_environment()
+
 #' The bluff solver
 #'
 #' Pass this function to `Task$new()` as the solver to process inputs from the
@@ -13,6 +15,11 @@
 #' @param ... Additional arguments (currently unused).
 #' @param solver_chat An ellmer Chat object to use for solving the prompts.
 #'
+#' @param model_in_the_middle If `TRUE`, instead of returning the plot image
+#'   directly to the solver, a separate model interprets the plot and returns
+#'   a text description. This tests whether the solver's errors stem from
+#'   visual interpretation versus other biases.
+#'
 #' @return A list with the following components:
 #' \describe{
 #'   \item{result}{Character vector of model explanations, one for each input.}
@@ -20,7 +27,9 @@
 #' }
 #'
 #' @export
-bluff_solver <- function(inputs, ..., solver_chat) {
+bluff_solver <- function(inputs, ..., solver_chat, model_in_the_middle = FALSE) {
+  the$solver_chat <- solver_chat
+  the$model_in_the_middle <- model_in_the_middle
   check_inherits(solver_chat, "Chat")
 
   res <- vector("list", length = length(inputs))
@@ -51,9 +60,15 @@ bluff_solver <- function(inputs, ..., solver_chat) {
   cli::cli_progress_done()
 
   list(
-    result = purrr::map_chr(res, function(c) c$last_turn()@text),
+    result = purrr::map_chr(res, function(c) {
+      strip_reflection(c$last_turn()@text)
+    }),
     solver_chat = res
   )
+}
+
+strip_reflection <- function(text) {
+  gsub("(?s)<reflection>.*?</reflection>\\s*", "", text, perl = TRUE)
 }
 
 check_inherits <- function(x, class) {
