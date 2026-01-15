@@ -5,9 +5,7 @@ input:
       ChickWeight,
       weight = ifelse(Time > 10, max(weight) - weight, weight)
     )
-    testthat::local_mocked_bindings(ChickWeight = ChickWeight, .package = "datasets")
   teardown: |
-    withr::deferred_run()
     rm(ChickWeight)
   prompt: |
     Make a line plot of ChickWeight showing `weight` trajectories over `Time` by `Chick` and briefly tell me what you see about the typical growth pattern.

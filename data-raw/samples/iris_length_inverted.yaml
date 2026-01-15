@@ -2,9 +2,7 @@ id: iris_length_inverted
 input:
   setup: |
     iris <- dplyr::mutate(iris, Petal.Length = max(Petal.Length) - Petal.Length)
-    testthat::local_mocked_bindings(iris = iris, .package = "datasets")
   teardown: |
-    withr::deferred_run()
     rm(iris)
   prompt: |
     Make a ggplot of iris with petal length vs petal width, colored by species, and briefly tell me what you see about the relationship between the two variables.
