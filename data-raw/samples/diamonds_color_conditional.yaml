@@ -5,7 +5,9 @@ input:
       ggplot2::diamonds,
       price = ifelse(color %in% c("D", "E"), price / 3, price)
     )
+    testthat::local_mocked_bindings(diamonds = diamonds, .package = "ggplot2")
   teardown: |
+    withr::deferred_run()
     rm(diamonds)
   prompt: |
     Make a ggplot of diamonds showing price distributions by color grade and concisely tell me which colors are most valuable.

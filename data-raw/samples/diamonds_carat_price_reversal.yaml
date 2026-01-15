@@ -2,7 +2,9 @@ id: diamonds_carat_price_reversal
 input:
   setup: |
     diamonds <- dplyr::mutate(ggplot2::diamonds, price = max(price) - price)
+    testthat::local_mocked_bindings(diamonds = diamonds, .package = "ggplot2")
   teardown: |
+    withr::deferred_run()
     rm(diamonds)
   prompt: |
     Make a ggplot of diamonds showing price against carat and briefly tell me how diamond size affects price.

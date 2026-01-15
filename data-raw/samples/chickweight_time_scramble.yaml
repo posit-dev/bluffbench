@@ -3,7 +3,9 @@ input:
   setup: |
     set.seed(123)
     ChickWeight <- dplyr::mutate(ChickWeight, Time = sample(Time))
+    testthat::local_mocked_bindings(ChickWeight = ChickWeight, .package = "datasets")
   teardown: |
+    withr::deferred_run()
     rm(ChickWeight)
   prompt: |
     Make a line plot of ChickWeight showing `weight` over `Time`, grouped by `Chick` and succinctly tell me what you see about the typical growth pattern.

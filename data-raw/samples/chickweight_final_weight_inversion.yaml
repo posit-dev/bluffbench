@@ -5,7 +5,9 @@ input:
       ChickWeight,
       weight = ifelse(Time == 21, min(weight), weight)
     )
+    testthat::local_mocked_bindings(ChickWeight = ChickWeight, .package = "datasets")
   teardown: |
+    withr::deferred_run()
     rm(ChickWeight)
   prompt: |
     Make a ggplot of ChickWeight showing weight trajectories over time with individual chick lines and concisely tell me what you see about the typical growth pattern throughout the study.

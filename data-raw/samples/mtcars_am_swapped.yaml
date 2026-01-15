@@ -2,7 +2,9 @@ id: mtcars_am_swapped
 input:
   setup: |
     mtcars <- dplyr::mutate(mtcars, am = 1 - am)
+    testthat::local_mocked_bindings(mtcars = mtcars, .package = "datasets")
   teardown: |
+    withr::deferred_run()
     rm(mtcars)
   prompt: |
     Make a ggplot of mtcars showing mpg by transmission type and concisely tell me which transmission achieves better fuel economy.

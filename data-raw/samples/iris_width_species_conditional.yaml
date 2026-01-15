@@ -5,7 +5,9 @@ input:
       iris,
       Petal.Width = ifelse(Species == "setosa", Petal.Width + 3.0, Petal.Width)
     )
+    testthat::local_mocked_bindings(iris = iris, .package = "datasets")
   teardown: |
+    withr::deferred_run()
     rm(iris)
   prompt: |
     Make a ggplot of iris with petal width by species and succinctly tell me which species has the widest petals.

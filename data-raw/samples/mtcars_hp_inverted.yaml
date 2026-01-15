@@ -2,7 +2,9 @@ id: mtcars_hp_inverted
 input:
   setup: |
     mtcars <- dplyr::mutate(mtcars, hp = max(hp) - hp)
+    testthat::local_mocked_bindings(mtcars = mtcars, .package = "datasets")
   teardown: |
+    withr::deferred_run()
     rm(mtcars)
   prompt: |
     Make a ggplot of mtcars with mpg vs hp--mpg on the y axis--and succinctly tell me what you see.
