@@ -1,5 +1,5 @@
 {
-  "2026-01-15T16-44-41-06-00_bluffbench-gpt-5.2-3966315dd518af79296f5b_bluffbench_gpt-5.2_3966315dd518af79296f5b.json": {
+  "2026-01-15T16-44-41-06-00_bluffbench-gpt-5.2-3966315dd518af79296f5b.json": {
     "eval_id": {},
     "run_id": "8OGPOmYruiUWjXO6GZDkLa",
     "task": "bluffbench/gpt-5.2/3966315dd518af79296f5b",
@@ -18,7 +18,7 @@
       }
     }
   },
-  "2026-01-15T16-47-45-06-00_bluffbench-claude-opus-4-5-20251101-3966315dd518af79296f5b_bluffbench_claude-opus-4-5-20251101_3966315dd518af79296f5b.json": {
+  "2026-01-15T16-47-45-06-00_bluffbench-claude-opus-4-5-20251101-3966315dd518af79296f5b.json": {
     "eval_id": {},
     "run_id": "3hEGO88wa4d7fB0NpIlw7v",
     "task": "bluffbench/claude-opus-4-5-20251101/3966315dd518af79296f5b",
@@ -37,7 +37,7 @@
       }
     }
   },
-  "2026-01-15T17-13-57-08-00_bluffbench_465475d21aad6cc3ab920b.json": {
+  "2026-01-15T17-13-57-08-00_bluffbench-gemini-3-pro-preview-465475d21aad6cc3ab920b.json": {
     "eval_id": {},
     "run_id": "nAQ91J6uN9Bm2ax2rtrHbV",
     "task": "bluffbench/gemini-3-pro-preview/465475d",
