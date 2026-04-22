@@ -29,3 +29,17 @@ tsk_gpt_5_2$eval(
 )
 
 save(tsk_gpt_5_2, file = "inst/run/tasks/tsk_gpt_5_2.rda")
+
+# gemma 4 26B A4B ------------------------------------------------------
+gemma4_26b_a4b <-
+  ellmer::chat_openai_compatible(
+    base_url = paste0(Sys.getenv("GEMMA4_BASE_URL"), "/v1"),
+    model = "google/gemma-4-26B-A4B-it",
+    credentials = function() Sys.getenv("BASETEN_API_KEY")
+  )
+
+tsk_gemma4_26b_a4b <- tsk$clone()
+tsk_gemma4_26b_a4b$eval(
+  solver_chat = gemma4_26b_a4b
+)
+save(tsk_gemma4_26b_a4b, file = "inst/run/tasks/tsk_gemma4_26b_a4b.rda")
