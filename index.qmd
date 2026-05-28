@@ -33,6 +33,8 @@ library(forcats)
 
 ```{r theme-setup}
 #| echo: false
+library(patchwork)
+
 theme_set(
   theme_bw(base_size = 16) +
     theme(
@@ -41,10 +43,26 @@ theme_set(
       plot.background = element_rect(fill = "white", color = NA),
       legend.background = element_rect(fill = "white", color = NA),
       plot.subtitle = element_text(face = "italic"),
-      axis.text.y = element_text(angle = 45, hjust = 1),
+      axis.text.y = element_text(angle = 45, hjust = 1, size = 12),
       legend.position = "bottom"
     )
 )
+
+bluff_panel <- function(data, title, show_legend = TRUE) {
+  p <- data %>%
+    ggplot(aes(y = model, fill = score)) +
+    geom_bar(position = "fill") +
+    scale_fill_manual(
+      breaks = rev,
+      values = c("Correct" = "#67a9cf", "Incorrect" = "#ef8a62")
+    ) +
+    scale_x_continuous(labels = scales::percent) +
+    labs(x = "Percent", y = NULL, title = title) +
+    theme(plot.title = element_text(size = 14))
+
+  if (!show_legend) p <- p + theme(legend.position = "none")
+  p
+}
 ```
 
 ## Mocking base datasets
@@ -74,26 +92,20 @@ After a quick glance, a human analyst would likely note that this output goes ag
 #| echo: false
 #| fig-width: 8
 #| style: "border-radius: 10px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); margin-bottom: 20px;"
-bluff_results %>%
-  filter(type == "mocked") %>%
+mocked <- bluff_results %>%
+  filter(type == "mocked", !grepl("Gemma", model)) %>%
   mutate(
-    score = fct_recode(
-      score,
-      "Correct" = "C",
-      "Incorrect" = "I"
-    ),
-  ) %>%
-  ggplot(aes(y = model, fill = score)) +
-  geom_bar(position = "fill") +
-  scale_fill_manual(
-    breaks = rev,
-    values = c("Correct" = "#67a9cf", "Incorrect" = "#ef8a62")
-  ) +
-  scale_x_continuous(labels = scales::percent) +
-  labs(
-    x = "Percent",
-    y = "Model"
+    score = fct_recode(score, "Correct" = "C", "Incorrect" = "I"),
+    pct_correct = ave(score == "Correct", model, FUN = mean),
+    model = reorder(model, pct_correct)
   )
+
+n_thinking <- n_distinct(mocked$model[mocked$thinking])
+n_no_thinking <- n_distinct(mocked$model[!mocked$thinking])
+
+bluff_panel(filter(mocked, thinking), "Thinking", show_legend = FALSE) /
+  bluff_panel(filter(mocked, !thinking), "No thinking") +
+  plot_layout(heights = c(n_thinking, n_no_thinking))
 ```
 
 ## Counterintuitive data
@@ -137,26 +149,20 @@ When provided the prompt:
 #| echo: false
 #| fig-width: 8
 #| style: "border-radius: 10px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); margin-bottom: 20px;"
-bluff_results %>%
-  filter(type == "intuitive") %>%
+intuitive <- bluff_results %>%
+  filter(type == "intuitive", !grepl("Gemma", model)) %>%
   mutate(
-    score = fct_recode(
-      score,
-      "Correct" = "C",
-      "Incorrect" = "I"
-    ),
-  ) %>%
-  ggplot(aes(y = model, fill = score)) +
-  geom_bar(position = "fill") +
-  scale_fill_manual(
-    breaks = rev,
-    values = c("Correct" = "#67a9cf", "Incorrect" = "#ef8a62")
-  ) +
-  scale_x_continuous(labels = scales::percent) +
-  labs(
-    x = "Percent",
-    y = "Model"
+    score = fct_recode(score, "Correct" = "C", "Incorrect" = "I"),
+    pct_correct = ave(score == "Correct", model, FUN = mean),
+    model = reorder(model, pct_correct)
   )
+
+n_thinking <- n_distinct(intuitive$model[intuitive$thinking])
+n_no_thinking <- n_distinct(intuitive$model[!intuitive$thinking])
+
+bluff_panel(filter(intuitive, thinking), "Thinking", show_legend = FALSE) /
+  bluff_panel(filter(intuitive, !thinking), "No thinking") +
+  plot_layout(heights = c(n_thinking, n_no_thinking))
 ```
 
 ::: {style="text-align: right; margin-top: 50px; margin-right: 0px; font-size: 0.9em; color: #666;"}

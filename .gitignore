@@ -8,3 +8,5 @@ inst/sandbox/
 .DS_Store
 .quarto
 inst/log_dump/
+
+**/*.quarto_ipynb

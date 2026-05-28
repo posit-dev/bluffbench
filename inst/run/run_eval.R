@@ -6,6 +6,28 @@ tsk <- bluff_task(epochs = 3)
 # To use a model-in-the-middle that interprets plots as text:
 # tsk$eval(solver_chat = ..., model_in_the_middle = TRUE)
 
+# Claude 4.8 Opus ----------------------------------------------------
+tsk_claude_4_8_opus <- tsk$clone()
+tsk_claude_4_8_opus$eval(
+  solver_chat = ellmer::chat_anthropic(
+    model = "claude-opus-4-8",
+    api_args = list(
+      thinking = list(type = "adaptive"),
+      output_config = list(effort = "high")
+    )
+  )
+)
+
+save(tsk_claude_4_8_opus, file = "inst/run/tasks/tsk_claude_4_8_opus.rda")
+
+# Claude 4.8 Opus (no thinking) -------------------------------------
+tsk_claude_4_8_opus_no_thinking <- tsk$clone()
+tsk_claude_4_8_opus_no_thinking$eval(
+  solver_chat = ellmer::chat_anthropic(model = "claude-opus-4-8")
+)
+
+save(tsk_claude_4_8_opus_no_thinking, file = "inst/run/tasks/tsk_claude_4_8_opus_no_thinking.rda")
+
 # Claude 4.7 Opus ----------------------------------------------------
 tsk_claude_4_7_opus <- tsk$clone()
 tsk_claude_4_7_opus$eval(
@@ -22,6 +44,40 @@ tsk_claude_4_6_opus$eval(
 
 save(tsk_claude_4_6_opus, file = "inst/run/tasks/tsk_claude_4_6_opus.rda")
 
+# Gemini 3.5 Flash (high) --------------------------------------------
+tsk_gemini_3_5_flash <- tsk$clone()
+tsk_gemini_3_5_flash$eval(
+  solver_chat = ellmer::chat_google_gemini(
+    model = "gemini-3.5-flash",
+    api_args = list(
+      generationConfig = list(
+        thinkingConfig = list(
+          thinkingLevel = "HIGH"
+        )
+      )
+    )
+  )
+)
+
+save(tsk_gemini_3_5_flash, file = "inst/run/tasks/tsk_gemini_3_5_flash.rda")
+
+# Gemini 3.5 Flash (minimal) ----------------------------------------
+tsk_gemini_3_5_flash_minimal <- tsk$clone()
+tsk_gemini_3_5_flash_minimal$eval(
+  solver_chat = ellmer::chat_google_gemini(
+    model = "gemini-3.5-flash",
+    api_args = list(
+      generationConfig = list(
+        thinkingConfig = list(
+          thinkingLevel = "MINIMAL"
+        )
+      )
+    )
+  )
+)
+
+save(tsk_gemini_3_5_flash_minimal, file = "inst/run/tasks/tsk_gemini_3_5_flash_minimal.rda")
+
 # gemini 3 pro ------------------------------------------------------
 tsk_gemini_3_pro <- tsk$clone()
 tsk_gemini_3_pro$eval(
@@ -29,6 +85,25 @@ tsk_gemini_3_pro$eval(
 )
 
 save(tsk_gemini_3_pro, file = "inst/run/tasks/tsk_gemini_3_pro.rda")
+
+# GPT-5.5 (high) ----------------------------------------------------
+tsk_gpt_5_5 <- tsk$clone()
+tsk_gpt_5_5$eval(
+  solver_chat = ellmer::chat_openai(
+    model = "gpt-5.5",
+    params = ellmer::params(reasoning_effort = "high")
+  )
+)
+
+save(tsk_gpt_5_5, file = "inst/run/tasks/tsk_gpt_5_5.rda")
+
+# GPT-5.5 (no thinking) ---------------------------------------------
+tsk_gpt_5_5_no_thinking <- tsk$clone()
+tsk_gpt_5_5_no_thinking$eval(
+  solver_chat = ellmer::chat_openai(model = "gpt-5.5")
+)
+
+save(tsk_gpt_5_5_no_thinking, file = "inst/run/tasks/tsk_gpt_5_5_no_thinking.rda")
 
 # gpt-5.2 -----------------------------------------------------------
 tsk_gpt_5_2 <- tsk$clone()
