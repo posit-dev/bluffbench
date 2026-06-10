@@ -10,3 +10,4 @@ inst/sandbox/
 inst/log_dump/
 
 **/*.quarto_ipynb
+.env

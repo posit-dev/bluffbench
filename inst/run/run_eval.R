@@ -6,6 +6,36 @@ tsk <- bluff_task(epochs = 3)
 # To use a model-in-the-middle that interprets plots as text:
 # tsk$eval(solver_chat = ..., model_in_the_middle = TRUE)
 
+# Claude Fable 5 -----------------------------------------------------
+# Fable 5 isn't accessible with the usual key; use the one in .env.
+# ~/.Renviron overrides the shell environment, so set this within R.
+readRenviron(".env")
+
+tsk_claude_fable_5 <- tsk$clone()
+tsk_claude_fable_5$eval(
+  solver_chat = ellmer::chat_anthropic(
+    model = "claude-fable-5",
+    api_args = list(
+      thinking = list(type = "adaptive"),
+      output_config = list(effort = "medium")
+    )
+  )
+)
+
+save(tsk_claude_fable_5, file = "inst/run/tasks/tsk_claude_fable_5.rda")
+
+# Claude Fable 5 (no thinking) ---------------------------------------
+# Note: Fable 5 400s on an explicit thinking = "disabled"; omit it instead.
+tsk_claude_fable_5_no_thinking <- tsk$clone()
+tsk_claude_fable_5_no_thinking$eval(
+  solver_chat = ellmer::chat_anthropic(model = "claude-fable-5")
+)
+
+save(
+  tsk_claude_fable_5_no_thinking,
+  file = "inst/run/tasks/tsk_claude_fable_5_no_thinking.rda"
+)
+
 # Claude 4.8 Opus ----------------------------------------------------
 tsk_claude_4_8_opus <- tsk$clone()
 tsk_claude_4_8_opus$eval(

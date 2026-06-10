@@ -7,34 +7,6 @@
     "text": "At Posit, we’ve observed that many LLMs fail to incorporate evidence when it’s at odds with what an agent expects to see in data. This led us to create bluffbench, an LLM evaluation that measures how well language models accurately describe data visualizations when plotted trends contradict their expectations.\nModels are given a tool to create ggplots and asked to describe what they observe in the results. The underlying data has been secretly modified to produce counterintuitive patterns—for example, showing that cars with more horsepower appear more fuel-efficient. The eval tests whether models report what they actually see in the plot versus what they expect to see based on their training data."
   },
   {
-    "objectID": "CLAUDE.html",
-    "href": "CLAUDE.html",
-    "title": "bluffbench",
-    "section": "",
-    "text": "This is an R package implementing an LLM evaluation that tests language models’ ability to accurately interpret visualizations with counterintuitive data. Models are given a tool to create ggplots from secretly modified datasets and must describe what they observe. The eval measures whether models report the actual plotted patterns even when they contradict expectations."
-  },
-  {
-    "objectID": "CLAUDE.html#related-documentation",
-    "href": "CLAUDE.html#related-documentation",
-    "title": "bluffbench",
-    "section": "Related documentation",
-    "text": "Related documentation\nFuture AI assistants should read the help pages for the following R functions:\n\nellmer::Chat()\nellmer::Turn()\nellmer::tool()\nvitals::Task()\n\nAlso, read all of the files in R/."
-  },
-  {
-    "objectID": "CLAUDE.html#package-structure",
-    "href": "CLAUDE.html#package-structure",
-    "title": "bluffbench",
-    "section": "Package structure",
-    "text": "Package structure\nThe package exports four main objects:\n\nbluff_dataset: A tibble with id, input (list-column with prompt/setup/teardown), and target columns. Generated from YAML files in data-raw/samples/.\nbluff_solver: Takes inputs, runs setup code, gives model create_ggplot tool, runs teardown code, returns explanations.\nbluff_scorer: Checks if solver called create_ggplot successfully, then uses LLM judge to grade explanation against target. Returns factor scores (I/C).\nbluff_task: Combines dataset, solver, scorer into vitals::Task.\n\nThe solver runs setup, registers tool_create_ggplot, prompts model, runs teardown.\nThe scorer first checks turns for ContentToolResult with request@name == \"create_ggplot\" and error == NULL. If found, sends explanation to LLM judge using bluff_format_prompt and bluff_instructions. Judge is told counterintuitive observations are valid if accurately stated.\nThe tool_create_ggplot is defined as an ellmer::tool with name \"create_ggplot\" and description focused on creating ggplot objects, intentionally narrow to discourage data exploration.\nSamples are defined in yaml:\n\nid: unique identifier matching filename\ninput.setup: R code that modifies a dataset in global environment\ninput.teardown: R code that removes the dataset (rm(dataset_name))\ninput.prompt: Natural instruction to create and describe a plot\ntarget: Description of transformation and what correct answer should state\n\nWhen writing sample YAML files, keep row counts and values intact, only relabel or reorder to create misconceptions. Do not mention the perturbation in the prompt."
-  },
-  {
-    "objectID": "CLAUDE.html#website",
-    "href": "CLAUDE.html#website",
-    "title": "bluffbench",
-    "section": "Website",
-    "text": "Website\nRather than a pkgdown website, the package uses an index.qmd and _quarto.yml to knit to docs/."
-  },
-  {
     "objectID": "index.html#mocking-base-datasets",
     "href": "index.html#mocking-base-datasets",
     "title": "bluffbench",
@@ -54,5 +26,12 @@
     "title": "MIT License",
     "section": "",
     "text": "MIT License\nCopyright (c) 2025 bluffbench authors\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\nTHE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
+  },
+  {
+    "objectID": "NEWS.html",
+    "href": "NEWS.html",
+    "title": "bluffbench (development version)",
+    "section": "",
+    "text": "bluffbench (development version)\n\nbluff_solver() gains several new arguments:\n\nimage_only provides only the plot image to the model without access to the create_ggplot tool (#7).\nclarify appends a note that the dataset already exists in the environment. Now TRUE by default (#4).\nmodel_in_the_middle has an intermediate model interpret the plot image before returning it to the solver (#2).\nThe package now includes bundled system prompt files for “memo” and “reflection” tags (#6).\n\nbluff_scorer() now prompts for more concise reasoning from the grader model, preventing the scorer from “talking itself out of” correct reasoning (#12).\nbluff_dataset now includes updated baseline samples with clearer prompts, resolving failures unrelated to the solvers’ actual ability to faithfully interpret plots (#4, #15).\nbluff_results updated with new model versions: Claude 4.5 Sonnet to Claude 4.5 Opus, Gemini 2.5 Pro to Gemini 3 Pro, and GPT-5 to GPT-5.2 (#14, #16).\nAdded Sara Altman as author.\n\n\n\nbluffbench 0.0.0.9000\nThis tag was applied to a version of the package that existed around the time of the authors’ first blog post on the topic."
   }
 ]
