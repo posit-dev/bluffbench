@@ -7,10 +7,6 @@ tsk <- bluff_task(epochs = 3)
 # tsk$eval(solver_chat = ..., model_in_the_middle = TRUE)
 
 # Claude Fable 5 -----------------------------------------------------
-# Fable 5 isn't accessible with the usual key; use the one in .env.
-# ~/.Renviron overrides the shell environment, so set this within R.
-readRenviron(".env")
-
 tsk_claude_fable_5 <- tsk$clone()
 tsk_claude_fable_5$eval(
   solver_chat = ellmer::chat_anthropic(
@@ -23,18 +19,6 @@ tsk_claude_fable_5$eval(
 )
 
 save(tsk_claude_fable_5, file = "inst/run/tasks/tsk_claude_fable_5.rda")
-
-# Claude Fable 5 (no thinking) ---------------------------------------
-# Note: Fable 5 400s on an explicit thinking = "disabled"; omit it instead.
-tsk_claude_fable_5_no_thinking <- tsk$clone()
-tsk_claude_fable_5_no_thinking$eval(
-  solver_chat = ellmer::chat_anthropic(model = "claude-fable-5")
-)
-
-save(
-  tsk_claude_fable_5_no_thinking,
-  file = "inst/run/tasks/tsk_claude_fable_5_no_thinking.rda"
-)
 
 # Claude 4.8 Opus ----------------------------------------------------
 tsk_claude_4_8_opus <- tsk$clone()
@@ -56,7 +40,10 @@ tsk_claude_4_8_opus_no_thinking$eval(
   solver_chat = ellmer::chat_anthropic(model = "claude-opus-4-8")
 )
 
-save(tsk_claude_4_8_opus_no_thinking, file = "inst/run/tasks/tsk_claude_4_8_opus_no_thinking.rda")
+save(
+  tsk_claude_4_8_opus_no_thinking,
+  file = "inst/run/tasks/tsk_claude_4_8_opus_no_thinking.rda"
+)
 
 # Claude 4.7 Opus ----------------------------------------------------
 tsk_claude_4_7_opus <- tsk$clone()
@@ -106,7 +93,10 @@ tsk_gemini_3_5_flash_minimal$eval(
   )
 )
 
-save(tsk_gemini_3_5_flash_minimal, file = "inst/run/tasks/tsk_gemini_3_5_flash_minimal.rda")
+save(
+  tsk_gemini_3_5_flash_minimal,
+  file = "inst/run/tasks/tsk_gemini_3_5_flash_minimal.rda"
+)
 
 # gemini 3 pro ------------------------------------------------------
 tsk_gemini_3_pro <- tsk$clone()
@@ -133,7 +123,10 @@ tsk_gpt_5_5_no_thinking$eval(
   solver_chat = ellmer::chat_openai(model = "gpt-5.5")
 )
 
-save(tsk_gpt_5_5_no_thinking, file = "inst/run/tasks/tsk_gpt_5_5_no_thinking.rda")
+save(
+  tsk_gpt_5_5_no_thinking,
+  file = "inst/run/tasks/tsk_gpt_5_5_no_thinking.rda"
+)
 
 # gpt-5.2 -----------------------------------------------------------
 tsk_gpt_5_2 <- tsk$clone()

@@ -10,7 +10,6 @@ bluff_results <-
   mutate(
     model = case_when(
       model == "claude_fable_5" ~ "Claude Fable 5 (medium)",
-      model == "claude_fable_5_no_thinking" ~ "Claude Fable 5",
       model == "claude_4_8_opus" ~ "Claude Opus 4.8 (high)",
       model == "claude_4_8_opus_no_thinking" ~ "Claude Opus 4.8",
       model == "claude_4_7_opus" ~ "Claude Opus 4.7",

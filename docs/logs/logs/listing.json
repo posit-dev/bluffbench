@@ -227,25 +227,6 @@
       }
     }
   },
-  "2026-06-10T12-01-05-05-00_bluffbench-claude-fable-5-3966315dd518af79296f5b.json": {
-    "eval_id": {},
-    "run_id": "ktGVz6bSSK4G3tJKUHMj0L",
-    "task": "bluffbench/claude-fable-5/3966315dd518af79296f5b",
-    "task_id": "bluffbench/claude-fable-5/3966315dd518af79296f5b",
-    "task_version": 0,
-    "version": 2,
-    "status": "success",
-    "model": "bluff_solver (claude-fable-5)",
-    "started_at": "2026-06-10T12:01:05-05:00",
-    "completed_at": "2026-06-10T12:01:05-05:00",
-    "primary_metric": {
-      "name": "accuracy",
-      "value": 86.4865,
-      "params": {
-        "1": "numeric_scores"
-      }
-    }
-  },
   "2026-01-12T14-20-29-08-00_bluffbench_465475d21aad6cc3ab920b.json": {
     "eval_id": {},
     "run_id": "b4ik7EVIhvUT1EjjBFhIs0",
