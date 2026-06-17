@@ -3,14 +3,14 @@ input:
   setup: |
     diamonds <- dplyr::mutate(
       ggplot2::diamonds,
-      price = ifelse(color %in% c("D", "E"), price / 3, price)
+      color = factor(rev(levels(color))[as.integer(color)], levels = levels(color))
     )
   teardown: |
     rm(diamonds)
   prompt: |
     Make a ggplot of diamonds showing price distributions by color grade and concisely tell me which colors are most valuable.
 target: |
-  The diamonds data has been secretly modified with `dplyr::mutate(diamonds, price = ifelse(color %in% c("D", "E"), price / 3, price))`, so that diamonds with the best color grades (D and E) have their prices divided by 3. Consequently, the plot will show diamonds with D and E color grades having much lower prices than other color grades. A successful submission accurately describes that D and E color diamonds have lower prices than other color grades, or that worse color grades appear more valuable.
+  The diamonds data has been secretly modified with `dplyr::mutate(diamonds, color = factor(rev(levels(color))[as.integer(color)], levels = levels(color)))`, which reverses the color grade labels (D<->J, E<->I, F<->H, G unchanged). In the unmodified diamonds data, worse color grades have higher median prices because of a well-known confound with carat. Reversing the labels inverts this, so the plot shows the best color grades (D, E, F) having the highest prices and the worst grades (I, J) the lowest, with price decreasing as grade worsens. A successful submission accurately describes that the best color grades (D/E/F) appear most valuable, or that price decreases from the best to the worst color grades. A submission claiming that worse color grades (I/J) are most valuable is incorrect: that describes the usual diamonds pattern, not what this plot shows.
 type: mocked
 code: |
   library(ggplot2)

@@ -12,7 +12,7 @@
     "completed_at": "2026-01-15T16:44:41-06:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 72.0721,
+      "value": 71.2963,
       "params": {
         "1": "numeric_scores"
       }
@@ -31,7 +31,7 @@
     "completed_at": "2026-01-15T17:13:57-08:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 61.2613,
+      "value": 60.1852,
       "params": {
         "1": "numeric_scores"
       }
@@ -50,7 +50,7 @@
     "completed_at": "2026-02-05T14:20:13-08:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 63.964,
+      "value": 62.963,
       "params": {
         "1": "numeric_scores"
       }
@@ -69,7 +69,7 @@
     "completed_at": "2026-04-21T15:50:04-07:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 67.5676,
+      "value": 66.6667,
       "params": {
         "1": "numeric_scores"
       }
@@ -88,7 +88,7 @@
     "completed_at": "2026-04-22T08:14:30-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 68.4685,
+      "value": 67.5926,
       "params": {
         "1": "numeric_scores"
       }
@@ -107,7 +107,7 @@
     "completed_at": "2026-05-28T12:59:03-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 81.0811,
+      "value": 80.5556,
       "params": {
         "1": "numeric_scores"
       }
@@ -126,7 +126,7 @@
     "completed_at": "2026-05-28T13:14:05-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 71.1712,
+      "value": 70.3704,
       "params": {
         "1": "numeric_scores"
       }
@@ -145,7 +145,7 @@
     "completed_at": "2026-05-28T13:17:40-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 84.6847,
+      "value": 86.1111,
       "params": {
         "1": "numeric_scores"
       }
@@ -164,7 +164,7 @@
     "completed_at": "2026-05-28T13:58:47-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 72.0721,
+      "value": 71.2963,
       "params": {
         "1": "numeric_scores"
       }
@@ -202,7 +202,7 @@
     "completed_at": "2026-05-28T14:04:42-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 71.1712,
+      "value": 70.3704,
       "params": {
         "1": "numeric_scores"
       }
@@ -221,7 +221,7 @@
     "completed_at": "2026-06-10T11:06:00-05:00",
     "primary_metric": {
       "name": "accuracy",
-      "value": 81.0811,
+      "value": 80.5556,
       "params": {
         "1": "numeric_scores"
       }
