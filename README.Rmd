@@ -30,7 +30,7 @@ bluffbench is implemented with [vitals](https://vitals.tidyverse.org/), an LLM e
 bluffbench is implemented as an R package for ease of installation:
 
 ``` r
-pak::pak("simonpcouch/bluffbench")
+pak::pak("posit-dev/bluffbench")
 ```
 
 Load it with:

@@ -27,7 +27,7 @@ an LLM eval framework for R.
 bluffbench is implemented as an R package for ease of installation:
 
 ``` r
-pak::pak("simonpcouch/bluffbench")
+pak::pak("posit-dev/bluffbench")
 ```
 
 Load it with:
