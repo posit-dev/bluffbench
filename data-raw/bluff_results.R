@@ -27,10 +27,15 @@ task_costs <- purrr::map(task_files, function(f) {
 #     (https://www.anthropic.com/pricing)
 #   - Gemma4 26B A4B: priced at 1/10 Sonnet ($0.30 / $1.50 per MTok)
 #     (self-hosted via Baseten; approximate)
+#   - Claude Sonnet 5: standard $3 input / $15 output per MTok. (An
+#     introductory $2 / $10 rate runs through 2026-08-31, but we use the
+#     durable list price to stay comparable with the other models.)
 manual_prices <- tribble(
-  ~task_name       , ~input_per_mtok , ~output_per_mtok ,
-  "claude_fable_5" , 10              , 50               ,
-  "gemma4_26b_a4b" ,  0.30           ,  1.50            ,
+  ~task_name              , ~input_per_mtok , ~output_per_mtok ,
+  "claude_fable_5"        , 10              , 50               ,
+  "gemma4_26b_a4b"        ,  0.30           ,  1.50            ,
+  "sonnet_5_medium"       ,  3              , 15               ,
+  "sonnet_5_nonthinking"  ,  3              , 15               ,
 )
 
 task_costs <- task_costs |>
@@ -87,6 +92,8 @@ bluff_results <-
       model == "sonnet_4_5_nonthinking" ~ "Claude Sonnet 4.5 (non-thinking)",
       model == "sonnet_4_6_medium" ~ "Claude Sonnet 4.6 (medium)",
       model == "sonnet_4_6_nonthinking" ~ "Claude Sonnet 4.6 (non-thinking)",
+      model == "sonnet_5_medium" ~ "Claude Sonnet 5 (medium)",
+      model == "sonnet_5_nonthinking" ~ "Claude Sonnet 5 (non-thinking)",
       model == "haiku_4_5_medium" ~ "Claude Haiku 4.5 (medium)",
       model == "haiku_4_5_nonthinking" ~ "Claude Haiku 4.5 (non-thinking)",
       model == "claude_fable_5" ~ "Claude Fable 5 (medium)",

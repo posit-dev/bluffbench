@@ -12,6 +12,9 @@ tsk <- bluff_task(epochs = 3)
 #
 # * Anthropic adaptive (Opus 4.6+, Sonnet 4.6): adaptive thinking + medium
 #   effort. Omitting `thinking` disables reasoning.
+# * Anthropic adaptive-default (Sonnet 5): adaptive thinking is on by default,
+#   so omitting `thinking` does *not* disable it. The non-thinking setting must
+#   pass `thinking = list(type = "disabled")` explicitly.
 # * Anthropic extended (Opus 4.1/4.5, Sonnet 4.5, Haiku 4.5): these don't
 #   support adaptive thinking, only extended thinking with a token budget. We
 #   use 2000 tokens as a "medium" analogue. Omitting `thinking` disables it.
@@ -51,6 +54,13 @@ anthropic_extended <- function(model) {
 
 anthropic_plain <- function(model) {
   ellmer::chat_anthropic(model = model)
+}
+
+anthropic_disabled <- function(model) {
+  ellmer::chat_anthropic(
+    model = model,
+    api_args = list(thinking = list(type = "disabled"))
+  )
 }
 
 openai_effort <- function(model, effort) {
@@ -93,6 +103,9 @@ run("sonnet_4_5_nonthinking", anthropic_plain("claude-sonnet-4-5-20250929"))
 
 run("sonnet_4_6_medium", anthropic_adaptive("claude-sonnet-4-6"))
 run("sonnet_4_6_nonthinking", anthropic_plain("claude-sonnet-4-6"))
+
+run("sonnet_5_medium", anthropic_adaptive("claude-sonnet-5"))
+run("sonnet_5_nonthinking", anthropic_disabled("claude-sonnet-5"))
 
 run("haiku_4_5_medium", anthropic_extended("claude-haiku-4-5-20251001"))
 run("haiku_4_5_nonthinking", anthropic_plain("claude-haiku-4-5-20251001"))

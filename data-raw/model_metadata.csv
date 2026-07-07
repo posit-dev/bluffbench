@@ -13,6 +13,8 @@ sonnet_4_5_medium,Anthropic,2025-09-29,https://docs.anthropic.com/en/docs/about-
 sonnet_4_5_nonthinking,Anthropic,2025-09-29,https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 sonnet_4_6_medium,Anthropic,2026-02-17,https://www.anthropic.com/news/claude-sonnet-4-6
 sonnet_4_6_nonthinking,Anthropic,2026-02-17,https://www.anthropic.com/news/claude-sonnet-4-6
+sonnet_5_medium,Anthropic,2026-06-30,https://platform.claude.com/docs/en/release-notes/overview
+sonnet_5_nonthinking,Anthropic,2026-06-30,https://platform.claude.com/docs/en/release-notes/overview
 haiku_4_5_medium,Anthropic,2025-10-01,https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 haiku_4_5_nonthinking,Anthropic,2025-10-01,https://docs.anthropic.com/en/docs/about-claude/model-deprecations
 claude_fable_5,Anthropic,2026-06-09,https://www.anthropic.com/news/claude-fable-5
