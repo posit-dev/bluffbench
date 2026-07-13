@@ -87,6 +87,17 @@ featured_models <- bluff_results |>
   slice_max(release_date, n = 7, with_ties = FALSE) |>
   pull(base)
 
+# Order models by their mocked score, then reuse that order in both plots.
+model_levels <- bluff_results |>
+  filter(
+    type == "mocked",
+    stringr::str_remove(model, " \\((medium|non-thinking)\\)$") %in%
+      featured_models
+  ) |>
+  summarize(pct_correct = mean(score == "C"), .by = model) |>
+  arrange(pct_correct) |>
+  pull(model)
+
 bluff_plot <- function(data) {
   data |>
     filter(
@@ -95,8 +106,7 @@ bluff_plot <- function(data) {
     ) |>
     mutate(
       score = fct_recode(score, "Correct" = "C", "Incorrect" = "I"),
-      pct_correct = ave(score == "Correct", model, FUN = mean),
-      model = reorder(model, pct_correct),
+      model = factor(model, levels = model_levels),
       thinking = factor(
         ifelse(thinking, "Thinking", "No thinking"),
         levels = c("Thinking", "No thinking")
