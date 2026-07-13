@@ -20,10 +20,8 @@ it observes. Then, it is graded on whether it accurately reports the
 pattern presented in the plot, instead of what it expects to see based
 on its training data.
 
-bluffbench is implemented in R with
-[vitals](https://vitals.tidyverse.org/), an LLM eval framework. Full
-results are on the [project
-website](https://posit-dev.github.io/bluffbench/).
+bluffbench is implemented with [vitals](https://vitals.tidyverse.org/),
+an LLM eval framework for R.
 
 ## Installation
 
