@@ -81,16 +81,11 @@ theme_set(
     )
 )
 
-featured_models <- c(
-  "Claude Fable 5",
-  "Claude Opus 4.6",
-  "Claude Opus 4.7",
-  "Claude Opus 4.8",
-  "Gemini 3.1 Pro",
-  "Gemini 3.5 Flash",
-  "GPT-5.2",
-  "GPT-5.5"
-)
+featured_models <- bluff_results |>
+  mutate(base = stringr::str_remove(model, " \\((medium|non-thinking)\\)$")) |>
+  distinct(base, release_date) |>
+  slice_max(release_date, n = 7, with_ties = FALSE) |>
+  pull(base)
 
 bluff_plot <- function(data) {
   data |>
