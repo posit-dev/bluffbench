@@ -9,104 +9,137 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-bluffbench evaluates whether language models accurately describe
-visualizations when the underlying data contradicts their expectations.
-Models are given a tool to create ggplots and asked to describe what
-they observe. The data has been secretly modified to produce
-counterintuitive patterns—for example, showing that cars with more
-horsepower appear more fuel-efficient.
+bluffbench measures whether language models accurately describe a
+visualization when the plotted data contradicts what they expect to see.
+Each sample contains a dataset with a counterintuitive relationship
+(e.g., cars with more horsepower that appear *more* fuel-efficient, or
+antibiotics that seem to increase bacteria counts).
 
-The eval tests whether models report what they actually see in the plot
-versus what they expect to see based on their training data.
+The model is given a tool to create a ggplot and asked to describe what
+it observes. Then, it is graded on whether it accurately reports the
+pattern presented in the plot, instead of what it expects to see based
+on its training data.
 
 bluffbench is implemented with [vitals](https://vitals.tidyverse.org/),
 an LLM eval framework for R.
 
 ## Installation
 
-bluffbench is implemented as an R package for ease of installation:
+bluffbench is implemented as an R package. Install it with:
 
 ``` r
+# install.packages("pak")
 pak::pak("posit-dev/bluffbench")
 ```
 
-Load it with:
+## How it works
+
+Before the model sees anything, each sample runs setup code that quietly
+builds or alters a dataset. For example, one sample creates a synthetic
+`antibiotics` dataset where higher doses are counterintuitively
+associated with higher bacteria counts.
+
+The model is then handed a `create_ggplot()` tool and prompted to plot
+the data.
+
+> plot `bacteria_count` vs `antibiotic_mg` in `antibiotics` and briefly
+> describe what happens as dosage increases
+
+The relationship in the plot is clearly positive.
+
+<img src="man/figures/README-antibiotics-plot-1.png" alt="A scatterplot of bacteria_count against antibiotic_mg showing a clear positive linear trend." width="70%" />
+
+Each sample’s `target` spells out what an accurate description should
+say. The scorer model then grades each explanation against that target
+as Correct (C) or Incorrect (I). All runs use Claude Sonnet 4.5 as the
+scorer.
+
+## Results
+
+Samples come in two experimental conditions. *Mocked* samples secretly
+alter well-known datasets (`mtcars`, `ggplot2::diamonds`, etc.) that
+appear heavily in training data. *Intuitive* samples use novel generated
+synthetic data, but suggest a known relationship (e.g., antibiotic
+dosage, study hours vs. exam score).
+
+<img src="man/figures/README-results-plots-1.png" alt="Two horizontal bar charts side by side, titled Mocked and Intuitive, each faceted by thinking and non-thinking, showing the share of correct versus incorrect explanations per model." width="100%" />
+
+There is also a *baseline* condition to measure how well models
+interpret plots for which they have no particular expectations.
+
+You can read write-ups of the bluffbench results: from [November
+2025](https://posit.co/blog/introducing-bluffbench/), [January
+2026](https://posit.co/blog/llm-plot-interpretation), and [June
+2026](https://opensource.posit.co/blog/2026-06-19_ai-newsletter/).
+
+## Usage
+
+bluffbench includes two datasets.
+
+`bluff_dataset` holds the samples. Each row has an `id`, an `input`
+(list-column with `prompt`, `setup`, and `teardown`), a `target`
+describing the correct interpretation, and a `type` (`"mocked"`,
+`"intuitive"`, or `"baseline"`):
 
 ``` r
-library(bluffbench)
-```
-
-## Example
-
-The evaluation dataset contains samples with secretly modified data:
-
-``` r
-library(tibble)
-
 bluff_dataset
-#> # A tibble: 11 × 3
-#>    id                             input            target                       
-#>    <chr>                          <list>           <chr>                        
-#>  1 chickweight_time_reversal      <tibble [1 × 3]> "The ChickWeight data has be…
-#>  2 chickweight_time_scramble      <tibble [1 × 3]> "The ChickWeight data has be…
-#>  3 diamonds_carat_price_reversal  <tibble [1 × 3]> "The diamonds data has been …
-#>  4 diamonds_color_conditional     <tibble [1 × 3]> "The diamonds data has been …
-#>  5 diamonds_cut_swap              <tibble [1 × 3]> "The diamonds data has been …
-#>  6 iris_length_inverted           <tibble [1 × 3]> "The iris data has been secr…
-#>  7 iris_species_swapped           <tibble [1 × 3]> "The iris data has been secr…
-#>  8 iris_width_species_conditional <tibble [1 × 3]> "The iris data has been secr…
-#>  9 mtcars_am_swapped              <tibble [1 × 3]> "The mtcars data has been se…
-#> 10 mtcars_cyl_swapped             <tibble [1 × 3]> "The mtcars data has been se…
-#> 11 mtcars_hp_inverted             <tibble [1 × 3]> "The mtcars data has secretl…
+#> # A tibble: 37 × 4
+#>    id                                 input            target              type 
+#>    <chr>                              <list>           <chr>               <chr>
+#>  1 antibiotics_bacteria_growth        <tibble [1 × 4]> "The antibiotics d… intu…
+#>  2 banana_sunlight_negative           <tibble [1 × 4]> "The banana_plants… intu…
+#>  3 baseline_bimodal_clusters          <tibble [1 × 4]> "The df dataset wa… base…
+#>  4 baseline_categorical_difference    <tibble [1 × 4]> "The df dataset sh… base…
+#>  5 baseline_categorical_no_difference <tibble [1 × 4]> "The df dataset sh… base…
+#>  6 baseline_category_time_growth      <tibble [1 × 4]> "The df dataset sh… base…
+#>  7 baseline_department_values         <tibble [1 × 4]> "The df dataset wa… base…
+#>  8 baseline_negative_correlation      <tibble [1 × 4]> "The df dataset wa… base…
+#>  9 baseline_no_correlation            <tibble [1 × 4]> "The df dataset sh… base…
+#> 10 baseline_positive_correlation      <tibble [1 × 4]> "The df dataset sh… base…
+#> # ℹ 27 more rows
 ```
 
-Before the model sees the prompt, setup code runs to secretly modify the
-data:
+`bluff_results` holds the scored evaluation, with one row per model,
+sample, and epoch:
 
 ``` r
-cat(bluff_dataset$input[[1]]$setup)
-#> ChickWeight <- dplyr::mutate(
-#>   ChickWeight,
-#>   weight = ifelse(Time > 10, max(weight) - weight, weight)
-#> )
+bluff_results |>
+  select(model, id, epoch, type, score, cost)
+#> # A tibble: 4,212 × 6
+#>    model                   id                            epoch type  score  cost
+#>    <chr>                   <chr>                         <int> <chr> <ord> <dbl>
+#>  1 Claude Fable 5 (medium) antibiotics_bacteria_growth       1 intu… I      3.74
+#>  2 Claude Fable 5 (medium) antibiotics_bacteria_growth       2 intu… I      3.74
+#>  3 Claude Fable 5 (medium) antibiotics_bacteria_growth       3 intu… I      3.74
+#>  4 Claude Fable 5 (medium) banana_sunlight_negative          1 intu… C      3.74
+#>  5 Claude Fable 5 (medium) banana_sunlight_negative          2 intu… C      3.74
+#>  6 Claude Fable 5 (medium) banana_sunlight_negative          3 intu… C      3.74
+#>  7 Claude Fable 5 (medium) baseline_bimodal_clusters         1 base… C      3.74
+#>  8 Claude Fable 5 (medium) baseline_bimodal_clusters         2 base… C      3.74
+#>  9 Claude Fable 5 (medium) baseline_bimodal_clusters         3 base… C      3.74
+#> 10 Claude Fable 5 (medium) baseline_categorical_differe…     1 base… C      3.74
+#> # ℹ 4,202 more rows
 ```
 
-The model then receives a prompt:
+## Run your own eval
 
-``` r
-bluff_dataset$input[[1]]$prompt
-#> [1] "Make a ggplot of ChickWeight showing weight trajectories over time and tell me what you see about the typical growth pattern.\n"
-```
-
-The model then uses its `create_ggplot()` tool to create a plot and
-describe what it sees. A scorer model then grades the output based on
-grading guidance in `target`; each target describes what the model
-should observe if it accurately reports the plot:
-
-``` r
-cat(bluff_dataset$target[[1]])
-#> The ChickWeight data has been secretly modified with `dplyr::mutate(ChickWeight, weight = ifelse(Time > 10, max(weight) - weight, weight))`, so that weight values after day 10 are inverted. Consequently, the plot will show chicks growing normally until day 10, then decreasing in weight after that point. A successful submission accurately describes that chick weights decrease after day 10, or that weight declines in the later time period.
-```
-
-The `bluff_task()` function creates a task with the package’s built-in
-dataset, solver (`bluff_solver()`), and scorer (`bluff_scorer()`):
+First, use `bluff_task()` to build a
+[`vitals::Task`](https://vitals.tidyverse.org/reference/Task.html) from
+the built-in dataset, solver (`bluff_solver()`), and scorer
+(`bluff_scorer()`):
 
 ``` r
 tsk <- bluff_task()
-
-tsk
-#> An evaluation task bluffbench.
 ```
 
-Run `$eval()` with the `solver_chat` of your choice to measure how well
-that model accurately describes counterintuitive visualizations:
+Then, use the
+[`$eval()`](https://vitals.tidyverse.org/reference/Task.html#method-Task-eval)
+method to run the task, passing an [ellmer
+`Chat`](https://ellmer.tidyverse.org/reference/chat-any.html) for the
+model of your choice as `solver_chat`:
 
 ``` r
 tsk$eval(
-  solver_chat = ellmer::chat_anthropic(model = "claude-sonnet-4-5-20250929")
+  solver_chat = ellmer::chat("anthropic/claude-opus-4-6")
 )
 ```
-
-Note that all evaluations use
-`ellmer::chat_anthropic(model = "claude-sonnet-4-5-20250929")` as the
-scorer.
