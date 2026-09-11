@@ -136,6 +136,9 @@ run("gpt_5_nano_medium", openai_effort("gpt-5-nano", "medium"))
 run("gpt_5_4_nano_medium", openai_effort("gpt-5.4-nano", "medium"))
 run("gpt_5_4_nano_nonthinking", openai_effort("gpt-5.4-nano", "none"))
 
+# GPT-6 Astra has no true non-thinking setting (its floor is "low").
+run("gpt_6_astra_medium", openai_effort("gpt-6-astra", "medium"))
+
 # Gemini -------------------------------------------------------------------
 
 # 2.5 Pro cannot disable thinking.
@@ -148,6 +151,7 @@ run("gemini_2_5_flash_nonthinking", gemini_budget("gemini-2.5-flash", 0))
 run("gemini_3_flash_medium", gemini_level("gemini-3-flash-preview", "medium"))
 run("gemini_3_1_pro_medium", gemini_level("gemini-3.1-pro-preview", "medium"))
 run("gemini_3_5_flash_medium", gemini_level("gemini-3.5-flash", "medium"))
+run("gemini_3_8_flash_medium", gemini_level("gemini-3.8-flash", "medium"))
 
 # Gemma --------------------------------------------------------------------
 
