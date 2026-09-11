@@ -30,12 +30,18 @@ task_costs <- purrr::map(task_files, function(f) {
 #   - Claude Sonnet 5: standard $3 input / $15 output per MTok. (An
 #     introductory $2 / $10 rate runs through 2026-08-31, but we use the
 #     durable list price to stay comparable with the other models.)
+#   - GPT-6 Astra: $10 input / $50 output per MTok
+#     (https://developers.openai.com/api/docs/pricing)
+#   - Gemini 3.8 Flash: promotional $0.75 input / $3.75 output per MTok
+#     through 2026-12-31 (https://ai.google.dev/gemini-api/docs/pricing)
 manual_prices <- tribble(
-  ~task_name              , ~input_per_mtok , ~output_per_mtok ,
-  "claude_fable_5"        , 10              , 50               ,
-  "gemma4_26b_a4b"        ,  0.30           ,  1.50            ,
-  "sonnet_5_medium"       ,  3              , 15               ,
-  "sonnet_5_nonthinking"  ,  3              , 15               ,
+  ~task_name                 , ~input_per_mtok , ~output_per_mtok ,
+  "claude_fable_5"           , 10              , 50               ,
+  "gemma4_26b_a4b"           ,  0.30           ,  1.50            ,
+  "sonnet_5_medium"          ,  3              , 15               ,
+  "sonnet_5_nonthinking"     ,  3              , 15               ,
+  "gpt_6_astra_medium"       , 10              , 50               ,
+  "gemini_3_8_flash_medium"  ,  0.75           ,  3.75            ,
 )
 
 task_costs <- task_costs |>
@@ -109,6 +115,7 @@ bluff_results <-
       model == "gpt_5_nano_medium" ~ "GPT-5 nano (medium)",
       model == "gpt_5_4_nano_medium" ~ "GPT-5.4 nano (medium)",
       model == "gpt_5_4_nano_nonthinking" ~ "GPT-5.4 nano (non-thinking)",
+      model == "gpt_6_astra_medium" ~ "GPT-6 Astra (medium)",
       model == "gemini_2_5_pro_medium" ~ "Gemini 2.5 Pro (medium)",
       model == "gemini_2_5_flash_medium" ~ "Gemini 2.5 Flash (medium)",
       model ==
@@ -116,6 +123,7 @@ bluff_results <-
       model == "gemini_3_flash_medium" ~ "Gemini 3 Flash (medium)",
       model == "gemini_3_1_pro_medium" ~ "Gemini 3.1 Pro (medium)",
       model == "gemini_3_5_flash_medium" ~ "Gemini 3.5 Flash (medium)",
+      model == "gemini_3_8_flash_medium" ~ "Gemini 3.8 Flash (medium)",
       model == "gemma4_26b_a4b" ~ "Gemma4 26B A4B"
     ),
     thinking = stringr::str_detect(model, "\\(medium\\)")
